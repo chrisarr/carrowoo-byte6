@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script type="text/javascript" src="d3/d3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <style> /* set the CSS */
+
+    body {
+        font: 10px sans-serif;
+        font-family: sans-serif; }
+
+    section {
+        width: 900px;
+        border: thin solid #e9e9e9;
+        padding: 20px 40px;
+        margin: 20px auto;
+        border-radius: 20px;}
+
+    iframe { width: 100%;
+        height: auto;
+        min-height: 400px;
+    }
+
+    img {
+        width: 100%;
+        height:auto;
+    }
+
+    a { background-color: #dbdcdc;
+        margin-top:10px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        color: #474747;
+        text-decoration: none;}
+    ul {
+        font-size: 8pt;
+        list-style-type: none;
+        width: auto;
+        padding: 0;
+        margin: 20px 0;
+        border-radius: 10px;
+    }
+
+    p { width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    }
+
+    li { width: auto;
+        padding: 7px 10px;
+        border-radius: 5px;
+        margin: 10px 0; }
+
+    </style>
+</head>
+<body>
+<section>
+    <h1>Byte 6 - Social Networks &amp; Big Data</h1>
+
+    <img src="images/finals.png">
+    <p>Choosing the Social Networks portion of this Byte, I took a look at two of the provided datasets, for Facebook and Amazon, while attempting to work with a third outside dataset which I will discuss below.</p>
+        <h3>Facebook &amp; Amazon</h3>
+    <p>I selected the Facebook common friends data and Amazon co-purchases datasets to work with, as they turned out to be the two I could most readily work with on my laptop machine. The size of these data sets made iteration challenging, but I found a good compormise between size and performance with these two sets.</p>
+    <h3>Data exploration and visualization</h3>
+    <p>Building off of the provided code, I worked to get the networks to map and visualize in an inteligible and insightful manner. This presented a number of challenges with the suggested visualization method, the force directed graph. The data was so large that the dynamic nature of the graph became not only moot, but even a hiderence to the experience. I was unable to manipulate the graphs, once rendered, in a performant way.</p>
+    <p>
+I ran a number of different k-core algorithm configurations on the two datasets, in order to explore how to consolidate some of the datapoints into neighborhoods that would both visualize as well as perform better. The results, charted, for these explorations were as follow:
+</p>
+<img src="images/k-core_results.png">
+<p>I found that in the Facebook dataset, the least common components came back as "1" everytime. This seemed sensible enough, as finding users who share at least one person in common on a large social network does not seem too challenging, with all the data at your dispsal.</p>
+<p>With the Amazon set, I found much more varied results as I changed the value of K in the algorithm. I found ranges from 1,700 all the way to as few as 2. This I suppose is not all that challenging, as there would likely be much more variety, and repetition, in co-purchase history. As I increased K, reaching for edges that shared at least K nodes in common, I found that number went further down. I likened that to finding individual purchasers who had 6 or more purchases in common. Even still, these results plotted very densly.</p>
+
+<p>Both of these datasets plotted along with according to the Power Law, as shown below:</p>
+<img src="images/power_law_plots.png">
+
+<p>I spent a lot of time modifying the values for the various force diagram plot settings, changing the gravity and the friction so as to be able to contain more of the visualization within the viewport. This worked out extremely well with the Facebook data set, and less pleasingly with the Amazon set. It is clear that further work to both improve the plot mechanics, as well as to better represent the scale of the data would be necessary if these graphs were to ever be used to really explore and learn from.</p>
+<img src="images/finals.png">
+<p>The visualizations above are shown in increasing order of values for K in my k-core algorithms. As I increased this value, I found the noise cleared up, and the graphs became easier to work with. Amazon, while less obvious, definitely rendered and "settled" faster as the value of K increased. The density was still overwhelming.</p>
+
+    <h3>Failed Data</h3>
+<p>As part of an interest of my own, I attempted to analyze data from Reddit, provided on the Stanford SNAP database. I built a script to reformat the data provided, related to images shared on the service and their respective re-posts on other subreddits within the community. This scraper worked correctly, but I inherently misunderstood the role the undirected graphing algorithm played in working with data. An author->image edge was inherently directed, and the edge connections I would produce working with such data would need visualization and exploration very different from the prior datasets.</p>
+<p> I was disappointed to not have enough time to really explore the Reddit data, but ended up learning more about the differing forms of graph relationships, expecially in regards to the algorithms we discussed. Here is a picture of the failed result to plot the directed reddit data:</p>
+<img src="images/reddit.png">
+
+</section>
+
+<section><h2>Links to work</h2>
+<p>I did not work with an iPython notebook for this project, as I ran into version issues at the turn in timeline, and had been working with direct python code the entire project. I have uploaded all of the source files to Github at: <a href="https://github.com/chrisarr/OSN-undirected-graphs">carrowoo-byte6 on Github</a></p>
+
+<p>Links to the graphs. (Note: These only loaded for me in Safari, and did so at a horribly slow pace):
+<ul>
+    <li><a href="">Facebook Shared-Connections Force-directed Graph</a></li>
+    <li><a href="">Amazon Co-purchases Force-directed Graph</a></li>
+</ul></p></section>
+
+</body>
+
+</html>
